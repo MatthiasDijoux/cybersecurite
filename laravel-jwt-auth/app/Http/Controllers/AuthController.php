@@ -49,7 +49,6 @@ class AuthController extends Controller
             if ($addAttempt->heure == null) {
                 return $this->createNewToken($token);
             } else {
-                return 'oups';
                 return response()->json(['error' => 'Vous avez effectué trop de tentative recemment, veuillez attendre 2h'], 401);
             }
         }
