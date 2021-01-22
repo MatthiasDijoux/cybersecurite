@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
@@ -30,6 +31,8 @@ class AuthController extends Controller
         if (!$token = auth()->attempt($validator->validated())) {
             $addAttempt = User::where('email', $request->email)->find(1);
             if (date('H') < $addAttempt->heure && $addAttempt->heure != null) {
+                Log::debug($addAttempt . 'Cet utilisateur a essayé de se connecté trop de fois');
+                Log::channel('syslog')->debug($addAttempt . 'Cet utilisateur a essayé de se connecté trop de fois');
                 return response()->json(['error' => 'Vous avez effectué trop de tentative recemment, veuillez attendre 2h'], 401);
             } else {
                 $addAttempt->heure = null;
