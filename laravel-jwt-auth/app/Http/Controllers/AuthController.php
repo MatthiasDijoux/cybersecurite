@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\Contact;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
@@ -33,7 +35,11 @@ class AuthController extends Controller
             if (date('H') < $addAttempt->heure && $addAttempt->heure != null) {
                 Log::debug($addAttempt . 'Cet utilisateur a essayé de se connecté trop de fois');
                 Log::channel('syslog')->debug($addAttempt . 'Cet utilisateur a essayé de se connecté trop de fois');
+                Mail::to($request->email)->send(new Contact([
+                    'email' => $request->email,
+                ]));
                 return response()->json(['error' => 'Vous avez effectué trop de tentative recemment, veuillez attendre 2h'], 401);
+                
             } else {
                 $addAttempt->heure = null;
                 $addAttempt->save();
