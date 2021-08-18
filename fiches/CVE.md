@@ -1,5 +1,7 @@
 # CVE Kesako
 Common Vulnerabilities and Exposures ou CVE est un dictionnaire des informations publiques relatives aux vulnérabilités de sécurité. Le dictionnaire est maintenu par l'organisme MITRE, soutenu par le département de la Sécurité intérieure des États-Unis. 
+Format de l'identifiant : CVE-AAAA-NNNN (AAAA est l'année de publication et NNNN un numéro d'identifiant unique).
+Exemple : (Wannacry) CVE-2017-0144.
 
 * https://www.cvedetails.com/
 
